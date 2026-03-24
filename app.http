@@ -1,0 +1,153 @@
+## Global Variabel
+@BaseUrl = https://hairlogy-be.delcom.org:8080
+#@BaseUrl = http://127.0.0.1:8000
+
+## Profile
+## ===========================================
+
+### Mengambil data profile pengembang
+# @name GetProfile
+GET {{BaseUrl}}/profile
+Content-Type: application/json
+
+### Mengambil photo profil
+# @name GetProfilePhoto
+GET {{BaseUrl}}/profile/photo
+Content-Type: application/json
+
+
+## Layanan
+## ===========================================
+
+### Mengambil semua data layanan
+# @name GetAllLayanan
+GET {{BaseUrl}}/layanan?search=&kategori=&tersedia=
+Content-Type: application/json
+
+#> {%
+#    client.global.set("layananId", response.body.data.layanan[0].id);
+#    console.log(client.global.get("layananId"))
+#%}
+
+### Menambahkan data layanan baru
+# @name PostLayanan
+POST {{BaseUrl}}/layanan
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Potong Rambut Pria
+--WebAppBoundary
+Content-Disposition: form-data; name="kategori"
+
+Potong Rambut
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Layanan potong rambut pria dengan berbagai pilihan gaya modern dan klasik oleh stylist berpengalaman.
+--WebAppBoundary
+Content-Disposition: form-data; name="harga"
+
+50000
+--WebAppBoundary
+Content-Disposition: form-data; name="durasiMenit"
+
+30
+--WebAppBoundary
+Content-Disposition: form-data; name="tersedia"
+
+true
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="example.png"
+Content-Type: image/png
+
+< ./example.png
+--WebAppBoundary--
+
+> {%
+    client.global.set("layananId", response.body.data.layananId);
+    console.log(client.global.get("layananId"))
+%}
+
+### Mengambil data layanan berdasarkan id-nya
+# @name GetLayananById
+GET {{BaseUrl}}/layanan/{{layananId}}
+Content-Type: application/json
+
+### Melihat gambar layanan
+# @name GetLayananGambar
+GET {{BaseUrl}}/layanan/{{layananId}}/gambar
+Content-Type: application/json
+
+### Mengubah hanya data layanan berdasarkan id-nya (tanpa gambar baru)
+# @name PutLayananOnlyData
+PUT {{BaseUrl}}/layanan/{{layananId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Potong Rambut Pria Premium
+--WebAppBoundary
+Content-Disposition: form-data; name="kategori"
+
+Potong Rambut
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Layanan potong rambut pria premium dengan konsultasi gaya dan finishing produk terbaik.
+--WebAppBoundary
+Content-Disposition: form-data; name="harga"
+
+75000
+--WebAppBoundary
+Content-Disposition: form-data; name="durasiMenit"
+
+45
+--WebAppBoundary
+Content-Disposition: form-data; name="tersedia"
+
+true
+--WebAppBoundary--
+
+### Mengubah gambar dan data layanan berdasarkan id-nya
+# @name PutLayanan
+PUT {{BaseUrl}}/layanan/{{layananId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Potong Rambut Pria
+--WebAppBoundary
+Content-Disposition: form-data; name="kategori"
+
+Potong Rambut
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Layanan potong rambut pria dengan berbagai pilihan gaya modern dan klasik.
+--WebAppBoundary
+Content-Disposition: form-data; name="harga"
+
+50000
+--WebAppBoundary
+Content-Disposition: form-data; name="durasiMenit"
+
+30
+--WebAppBoundary
+Content-Disposition: form-data; name="tersedia"
+
+true
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="example.png"
+Content-Type: image/png
+
+< ./example.png
+--WebAppBoundary--
+
+### Menghapus data layanan berdasarkan id-nya
+# @name DeleteLayanan
+DELETE {{BaseUrl}}/layanan/{{layananId}}
+Content-Type: application/json
